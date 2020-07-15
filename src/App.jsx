@@ -26,7 +26,9 @@ class App extends Component {
       <>
         {authentication}
         <h1>Movie selector</h1>
-        <MovieSearch />
+        <MovieSearch 
+          authenticated={this.state.authenticated}
+        />
       </>
       );
   };
