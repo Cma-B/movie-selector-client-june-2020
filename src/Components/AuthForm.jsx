@@ -15,13 +15,13 @@ const AuthForm = (props) => {
           props.registration && (
             <>
               <label>Password confirmation</label>
-              <input name='passwordConfirmation' type='password' id='passwordConfirmation' />
+              <input name='passwordConfirmation' type='password' id='password-confirmation' />
             </>
           )
         }
         <button id='submit'>Submit</button>
       </form>
-      <button onClick={props.toggleRegistration}>{toggleRegistrationElement}</button>
+      <button id="toggle" onClick={props.toggleRegistration}>{toggleRegistrationElement}</button>
     </>
   )
 }
