@@ -9,4 +9,14 @@ const storeAuthCredentials = ({ headers }) => {
   sessionStorage.setItem("credentials", JSON.stringify(credentials))
 }
 
-export { storeAuthCredentials }
+const getAuthHeaders = async () => {
+  let credentials = await JSON.parse(sessionStorage.getItem("credentials"))
+  let headers = {
+    ...credentials,
+    "Content-type": "application/json",
+    Accept: "application/json"
+  }
+  return headers
+}
+
+export { storeAuthCredentials, getAuthHeaders }

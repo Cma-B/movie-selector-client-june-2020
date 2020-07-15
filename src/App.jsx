@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Authentication from "./Components/Authentication";
+import MovieSearch from "./Components/MovieSearch";
+
 
 class App extends Component {
   state = {
@@ -24,6 +26,7 @@ class App extends Component {
       <>
         {authentication}
         <h1>Movie selector</h1>
+        <MovieSearch />
       </>
       );
   };
