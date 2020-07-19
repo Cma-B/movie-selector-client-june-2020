@@ -5,6 +5,7 @@
     "provider": "provider",
     "uid": "user@mail.com",
     "name": "Bob Marley",
-    "allow_password_change": false
+    "allow_password_change": false,
+    "subscriber": false
   }
 }

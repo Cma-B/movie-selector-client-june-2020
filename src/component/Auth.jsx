@@ -18,7 +18,7 @@ class Auth extends Component {
       });
 
       await storeAuthCredentials(response);
-      this.props.setAuthenticated();
+      this.props.setAuthenticated(response.data.data.subscriber);
     } catch (error) {
       console.log(error);
     }
