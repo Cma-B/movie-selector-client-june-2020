@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Button, Segment } from 'semantic-ui-react'
+import { storeAuthCredentials, getAuthHeaders } from "../modules/auth"
 
 class Movie extends Component {
   state = {
@@ -9,43 +10,37 @@ class Movie extends Component {
     watchlistDetails: {}
   };
 
-  addToWatchlist = async (event) => {
-    let movieId = event.target.parentElement.dataset.id
-    let credentials = await JSON.parse(sessionStorage.getItem("credentials"))
-    let headers = {
-      ...credentials,
-      "Content-type": "application/json",
-      Accept: "application/json"
-    }
-    let response
-    if (this.state.watchlistDetails.hasOwnProperty("id")) {
-      response = await axios.put(
-        `/watchlist/${this.state.watchlistDetails.id}`,
-        {
-          movie_id: movieId,
-        },
-        {
-          headers: headers,
-        }
-      );
-    } else {
-      response = await axios.post(
-        `/watchlist`,
-        {
-          movie_id: movieId,
-        },
-        {
-          headers: headers,
-        }
-      )
-    }
+  addToWatchlist = async (movie) => {
+    try {
+      let headers = await getAuthHeaders()
+      let response = await axios.post("/watchlist_items", {
+        movie_db_id: movie.id,
+        title: movie.title
+      },{
+        headers: headers
+      })
+      await storeAuthCredentials(response)
+    
     this.setState({
       watchlistMessage: {
         message: response.data.message,
-        id: movieId,
+        id: movie.id,
       },
       watchlistDetails: response.data.watchlist
     })
+  } catch (error) {
+    let errorMessage = error.response.data.errors == undefined ?
+    error.response.data.message : 
+    error.response.data.errors[0]
+
+    this.setState({
+      watchListMessage: {
+        message: errorMessage,
+        id: movie.id
+      }
+    })
+  }
+
   }
 
   getRandomMovie = async () => {

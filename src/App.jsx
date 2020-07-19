@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Movie from "./component/movie/Movie";
+import Movie from "./component/Movie";
 import Auth from "./component/Auth";
 import PaymentForm from "./component/PaymentForm";
 import { Elements } from "react-stripe-elements";
@@ -32,7 +32,7 @@ class App extends Component {
           </>
         ))
       : (login = <Auth setAuthenticated={this.setAuthenticated} />);
-
+debugger 
     return (
       <>
         <div>{login}</div>
