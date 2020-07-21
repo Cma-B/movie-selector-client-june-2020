@@ -7,18 +7,29 @@ import { Segment, Menu, Button } from "semantic-ui-react";
 class Auth extends Component {
   state = {
     renderForm: false,
+    registration: false,
   };
 
   authenticate = async (event) => {
     event.preventDefault();
     try {
-      let response = await axios.post("/auth/sign_in", {
+      let response 
+
+      if (this.state.registration) {
+        response = await axios.post("/auth", {
+          email: event.target.email.value,
+          password: event.target.password.value,
+          password_confirmation: event.target.passwordConfirmation.value
+        })
+      } else {
+
+      response = await axios.post("/auth/sign_in", {
         email: event.target.email.value,
         password: event.target.password.value,
       });
-
+    }
       await storeAuthCredentials(response);
-      this.props.setAuthenticated();
+      this.props.setAuthenticated(response.data.data.subscriber);
     } catch (error) {
       console.log(error);
     }
@@ -29,8 +40,13 @@ class Auth extends Component {
     let form;
 
     this.state.renderForm
-      ? (form = <AuthForm authenticate={this.authenticate} />)
-      : (button = (
+      ? (form = <AuthForm 
+        authenticate={this.authenticate}
+        registration={this.state.registration}
+        toggleRegistration={() => this.setState({registration: !this.state.registration})} 
+        />
+        ):(
+          button = (
         <Segment inverted>
           <Menu inverted pointing secondary>
             <Menu.Menu position="right">

@@ -2,6 +2,9 @@ import React from "react";
 import { Button, Form, Segment, Menu, Checkbox } from "semantic-ui-react";
 
 const AuthForm = (props) => {
+  let toggleRegistrationElement = props.registration ? 
+  'Do you already have an account? Click here' : 'Sign up!'
+
   return (
     <>
       <Segment inverted>
@@ -34,7 +37,23 @@ const AuthForm = (props) => {
                   id="password"
                   placeholder="Password"
                 />
-              </Form.Field>
+                </Form.Field>
+                {
+                  
+                    props.registration && (
+                      <>
+                       <Form.Field>
+                        <label>Password confirmation</label>
+                        <input name='passwordConfirmation'
+                         type='password'
+                         id='password-confirmation'
+                         placeholder="Password-confirmation"
+                          />
+                        </Form.Field>
+                      </>
+                    )
+                }
+             
               <Form.Field>
                 <Checkbox label="I agree to the Terms and Conditions" />
               </Form.Field>
@@ -43,6 +62,10 @@ const AuthForm = (props) => {
                   Submit
                 </Button>
               </Form.Field>
+              <Form.Field>
+            
+            <Button inverted id="toggle" onClick={props.toggleRegistration}>{toggleRegistrationElement}</Button>
+            </Form.Field>
             </Form>
           </Menu.Menu>
         </Menu>

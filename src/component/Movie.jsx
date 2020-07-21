@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Button, Segment } from 'semantic-ui-react'
+import { storeAuthCredentials, getAuthHeaders } from "../modules/auth"
 
 class Movie extends Component {
   state = {
@@ -10,27 +11,17 @@ class Movie extends Component {
     showWatchlist: false
   };
 
-  addToWatchlist = async (film) => {
-    let movie = film
-    let credentials = await JSON.parse(sessionStorage.getItem("credentials"))
-    let headers = {
-      ...credentials,
-      "Content-type": "application/json",
-      Accept: "application/json"
-    }
-
-    let response = await axios.post(
-      `/watchlist_items`,
-      {
+  addToWatchlist = async (movie) => {
+    try {
+      let headers = await getAuthHeaders()
+      let response = await axios.post("/watchlist_items", {
         movie_db_id: movie.id,
         title: movie.title
-      },
-      {
-        headers: headers,
-      }
-    )
+      },{
+        headers: headers
+      })
+      await storeAuthCredentials(response)
     
-    debugger;
     this.setState({
       watchlistMessage: {
         message: response.data.message,
@@ -38,6 +29,19 @@ class Movie extends Component {
       },
       watchlist: response.data.watchlist.watchlist_items
     })
+  } catch (error) {
+    let errorMessage = error.response.data.errors == undefined ?
+    error.response.data.message : 
+    error.response.data.errors[0]
+
+    this.setState({
+      watchListMessage: {
+        message: errorMessage,
+        id: movie.id
+      }
+    })
+  }
+
   }
 
   getRandomMovie = async () => {
