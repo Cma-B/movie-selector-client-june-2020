@@ -68,13 +68,20 @@ class Movie extends Component {
       )
     )
 
-    if (this.state.watchlist.length !== 0 ) {
+    if (this.state.watchlist.length !== 0 )
+    
+     {
       watchlistDetailsDisplay = this.state.watchlist.map((movie) => {
-        <Segment></Segment>
+       
         return <li key={movie.title}>{`${movie.title}`}</li>;
+        
       });
-    } else {
+     
+    }
+     
+     else {
       watchlistDetailsDisplay = "You have no movies in your watchlist";
+     
     }
 
     return (
@@ -95,12 +102,12 @@ class Movie extends Component {
            
         </div>
         <div>
-        <Segment inverted >
+        <Segment style={{ marginLeft: '5em', marginRight: '28em', marginTop: '2em' }} >
         <Menu inverted pointing secondary>
-          <Menu.Menu position="right">
+          <Menu.Menu position="left">
         {this.props.authenticated && (
        
-          <Button inverted
+          <Button color='black'
             onClick={() => this.setState({ showWatchlist: !this.state.showWatchlist })}
           >
             View watchlist
