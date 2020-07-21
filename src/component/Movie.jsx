@@ -70,6 +70,7 @@ class Movie extends Component {
 
     if (this.state.watchlist.length !== 0 ) {
       watchlistDetailsDisplay = this.state.watchlist.map((movie) => {
+        <Segment></Segment>
         return <li key={movie.title}>{`${movie.title}`}</li>;
       });
     } else {
