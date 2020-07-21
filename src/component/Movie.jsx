@@ -45,86 +45,82 @@ class Movie extends Component {
   }
 
   render() {
+
     let randomMovie;
     let watchlistDetailsDisplay
     this.state.randomMovie && (
       randomMovie = (
         <Segment>
-        <div id="random-movie">
-          <h2 id="movie-title">{this.state.randomMovie.title}</h2>
-          <h3>Description</h3>
-          <p id="movie-overview">{this.state.randomMovie.overview}</p>
-          <p id="movie-release-date">This movie was released in {this.state.randomMovie.release_date}</p>
-          <p id="movie-rating">A total of {this.state.randomMovie.vote_count} persons has rated this movie. It has an average rating of {this.state.randomMovie.vote_average}</p>
+          <div id="random-movie">
+            <h2 id="movie-title">{this.state.randomMovie.title}</h2>
+            <h3>Description</h3>
+            <p id="movie-overview">{this.state.randomMovie.overview}</p>
+            <p id="movie-release-date">This movie was released in {this.state.randomMovie.release_date}</p>
+            <p id="movie-rating">A total of {this.state.randomMovie.vote_count} persons has rated this movie. It has an average rating of {this.state.randomMovie.vote_average}</p>
 
-          {this.props.authenticated && (
+            {this.props.authenticated && (
 
-            <Button color='black' id="watchlist-button" onClick={() => this.addToWatchlist(this.state.randomMovie)} >Add to Watchlist</Button>
+              <Button color='black' id="watchlist-button" onClick={() => this.addToWatchlist(this.state.randomMovie)} >Add to Watchlist</Button>
 
-          )}
-          <p id="watchlist-message">{this.state.watchlistMessage.message}</p>
-        </div>
+            )}
+            <p id="watchlist-message">{this.state.watchlistMessage.message}</p>
+          </div>
         </Segment>
       )
     )
-
-    if (this.state.watchlist.length !== 0 )
-    
-     {
+    if (this.state.watchlist.length !== 0) {
       watchlistDetailsDisplay = this.state.watchlist.map((movie) => {
-       
         return <li key={movie.title}>{`${movie.title}`}</li>;
-        
       });
-     
     }
-     
-     else {
+
+    else {
       watchlistDetailsDisplay = "You have no movies in your watchlist";
-     
     }
 
     return (
       <>
-      
+
         <div>
-       
+
           <Segment style={{ marginLeft: '5em', marginRight: '28em', marginTop: '2em' }}>
             <Message floating color="teal" size='large'
-             header='What Should I Watch?'
-             content='If you are wondering what movie you could watch and enjoy your free time, use Movie Selector randomizer below.'
+              header='What Should I Watch?'
+              content='If you are wondering what movie you could watch and enjoy your free time, use Movie Selector randomizer below.'
             />
             <Button color='black' onClick={this.getRandomMovie} >Randomize Movie</Button>
-            
-           
+
+
             {randomMovie}
-            </Segment>
-           
+          </Segment>
+
         </div>
         <div>
-        <Segment style={{ marginLeft: '5em', marginRight: '28em', marginTop: '2em' }} >
-        <Menu inverted pointing secondary>
-          <Menu.Menu position="left">
-        {this.props.authenticated && (
-       
-          <Button color='black'
-            onClick={() => this.setState({ showWatchlist: !this.state.showWatchlist })}
-          >
-            View watchlist
-          </Button>
-        )}
-        {this.state.showWatchlist &&
-          <>
-            <ul id="watchlist-details">{watchlistDetailsDisplay}</ul>
-          </>
-        
-        }
-         </Menu.Menu>
-         </Menu>
-        </Segment>
-        
-       
-</div>
+
+          {this.props.authenticated && (
+
+            <Segment style={{ marginLeft: '5em', marginRight: '28em', marginTop: '2em' }} >
+              <Menu inverted pointing secondary>
+                <Menu.Menu position="left">
+                  <Button color='black'
+                    onClick={() => this.setState({ showWatchlist: !this.state.showWatchlist })}
+                  >
+                    View watchlist
+                  </Button>
+                </Menu.Menu>
+              </Menu>
+            </Segment>
+          )}
+          {this.state.showWatchlist &&
+            <>
+              <Segment style={{ marginLeft: '5em', marginRight: '28em', marginTop: '-1em' }} >
+
+                <ul id="watchlist-details">{watchlistDetailsDisplay}</ul>
+              </Segment>
+            </>
+          }
+
+        </div>
       </>
     );
   }
