@@ -7,6 +7,7 @@ import {
   CardCVCElement,
 } from "react-stripe-elements";
 import { getAuthHeaders } from "../modules/auth";
+import { Button, Form, Segment, Menu } from "semantic-ui-react";
 
 class PaymentForm extends Component {
   state = {
@@ -40,28 +41,42 @@ class PaymentForm extends Component {
   };
 
   render() {
+    
     let form = this.state.renderForm ? (
-      <form onSubmit={this.payWithStripe} id="payment-form">
+      <Segment inverted floated="right">
+    <Menu inverted pointing secondary>
+      <Menu.Menu position="right">
+      <Form inverted onSubmit={this.payWithStripe} id="payment-form">
+      <Form.Field>
         <label>Card number</label>
         <CardNumberElement />
-
+        </Form.Field>
+        <Form.Field>
         <label>Expiry Date</label>
         <CardExpiryElement />
-
+        </Form.Field>
+        <Form.Field>
         <label>CVC</label>
         <CardCVCElement />
+        </Form.Field>
+        <Form.Field>
 
-        <button id="submit-payment" type="submit">
+        <Button color='black' id="submit-payment" type="submit">
           Submit
-        </button>
-      </form>
+        </Button>
+        </Form.Field>
+      </Form>
+      </Menu.Menu>
+        </Menu>
+      </Segment>
+
     ) : (
-      <button
+      <Button color='black'
         id="become-subscriber"
         onClick={() => this.setState({ renderForm: true })}
       >
         Become a subscriber
-      </button>
+      </Button>
     );
 
     let message;

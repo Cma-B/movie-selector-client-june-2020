@@ -37,15 +37,23 @@ const AuthForm = (props) => {
                   id="password"
                   placeholder="Password"
                 />
+                </Form.Field>
                 {
+                  
                     props.registration && (
                       <>
+                       <Form.Field>
                         <label>Password confirmation</label>
-                        <input name='passwordConfirmation' type='password' id='password-confirmation' />
+                        <input name='passwordConfirmation'
+                         type='password'
+                         id='password-confirmation'
+                         placeholder="Password-confirmation"
+                          />
+                        </Form.Field>
                       </>
                     )
                 }
-              </Form.Field>
+             
               <Form.Field>
                 <Checkbox label="I agree to the Terms and Conditions" />
               </Form.Field>
@@ -54,8 +62,11 @@ const AuthForm = (props) => {
                   Submit
                 </Button>
               </Form.Field>
+              <Form.Field>
+            
+            <Button inverted id="toggle" onClick={props.toggleRegistration}>{toggleRegistrationElement}</Button>
+            </Form.Field>
             </Form>
-            <button id="toggle" onClick={props.toggleRegistration}>{toggleRegistrationElement}</button>
           </Menu.Menu>
         </Menu>
       </Segment>
